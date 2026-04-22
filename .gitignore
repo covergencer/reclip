@@ -3,6 +3,11 @@ downloads/
 __pycache__/
 *.pyc
 assets/*.mov
+*.mp4
+*.mov
+*.avi
+bin/ffmpeg
+bin/ffprobe
 .DS_Store
 .env
 .env.local

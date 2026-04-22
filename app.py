@@ -17,14 +17,15 @@ def run_download(job_id, url, format_choice, format_id):
     job = jobs[job_id]
     out_template = os.path.join(DOWNLOAD_DIR, f"{job_id}.%(ext)s")
 
-    cmd = ["yt-dlp", "--no-playlist", "-o", out_template]
+    ffmpeg_path = os.path.join(os.path.dirname(__file__), "bin")
+    cmd = ["yt-dlp", "--ffmpeg-location", ffmpeg_path, "--no-playlist", "-o", out_template]
 
     if format_choice == "audio":
         cmd += ["-x", "--audio-format", "mp3"]
     elif format_id:
-        cmd += ["-f", f"{format_id}+bestaudio/best", "--merge-output-format", "mp4"]
+        cmd += ["-f", f"{format_id}+bestaudio/best", "--merge-output-format", "mp4", "-S", "vcodec:h264,res,acodec:m4a"]
     else:
-        cmd += ["-f", "bestvideo+bestaudio/best", "--merge-output-format", "mp4"]
+        cmd += ["-f", "bestvideo+bestaudio/best", "--merge-output-format", "mp4", "-S", "vcodec:h264,res,acodec:m4a"]
 
     cmd.append(url)
 
